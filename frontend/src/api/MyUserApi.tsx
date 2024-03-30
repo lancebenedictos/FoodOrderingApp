@@ -1,5 +1,7 @@
+import { User } from "@/types";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
+import { toast } from "sonner";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -35,4 +37,77 @@ export const useCreateMyUser = () => {
   } = useMutation(createMyUserRequest);
 
   return { createUser, isLoading, isError, isSuccess };
+};
+
+type UpdateMyUserRequest = {
+  name: string;
+  addressLine1: string;
+  country: string;
+  city: string;
+};
+
+export const useGetMyUser = () => {
+  const { getAccessTokenSilently } = useAuth0();
+
+  const getMyUser = async (): Promise<User> => {
+    const accessToken = await getAccessTokenSilently();
+
+    const response = await fetch(`${API_BASE_URL}/api/my/user`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) throw new Error("User get failed");
+    return response.json();
+  };
+  const {
+    data: currentUser,
+    error,
+    isLoading,
+  } = useQuery("fetchCurrentUser", getMyUser);
+
+  if (error) toast.error(error.toString());
+
+  return { currentUser, isLoading };
+};
+export const useUpdateMyUser = () => {
+  const { getAccessTokenSilently } = useAuth0();
+
+  const updateMyUserRequest = async (formData: UpdateMyUserRequest) => {
+    const accessToken = await getAccessTokenSilently();
+
+    const response = await fetch(`${API_BASE_URL}/api/my/user`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (!response.ok) throw new Error("User update failed");
+
+    return response.json();
+  };
+
+  const {
+    mutateAsync: updateUser,
+    error,
+    isLoading,
+    isSuccess,
+    reset,
+  } = useMutation(updateMyUserRequest);
+
+  if (isSuccess) {
+    toast.success("User profile updated");
+  }
+
+  if (error) {
+    toast.error(error.toString());
+    reset();
+  }
+  return { updateUser, isLoading };
 };

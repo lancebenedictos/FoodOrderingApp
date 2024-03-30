@@ -5,6 +5,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import AppRoutes from "./AppRoutes";
 import Auth0ProviderWithNavigate from "./auth/Auth0ProviderWithNavigate";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { Toaster } from "./components/ui/sonner";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,6 +21,12 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <QueryClientProvider client={queryClient}>
         <Auth0ProviderWithNavigate>
           <AppRoutes />
+          <Toaster
+            visibleToasts={1}
+            position="top-right"
+            richColors
+            theme="light"
+          />
         </Auth0ProviderWithNavigate>
       </QueryClientProvider>
     </Router>
