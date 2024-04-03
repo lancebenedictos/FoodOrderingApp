@@ -12,7 +12,7 @@ router.post(
 
 router.post(
   "/checkout/webhook",
-  express.raw({ type: "*/*" }),
+  express.raw(),
   OrderController.stripeWebhookHandler
 );
 
