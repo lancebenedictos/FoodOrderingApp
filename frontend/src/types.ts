@@ -17,6 +17,7 @@ export type Restaurant = {
   menuItems: MenuItem[];
   imageUrl: string;
   lastUpdated: string;
+  country: string;
 };
 
 export type MenuItem = {

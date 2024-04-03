@@ -8,6 +8,7 @@ var bodyParser = require("body-parser");
 import myRestaurantRoute from "./routes/MyRestaurantRoute";
 import userRoutes from "./routes/UserRoutes";
 import restaurantRoute from "./routes/RestaurantRoute";
+import orderRoute from "./routes/OrderRoute";
 
 mongoose
   .connect(process.env.MONGODB_CONNECTION_STRING as string)
@@ -20,9 +21,12 @@ cloudinary.config({
 });
 
 const app = express();
-app.use(bodyParser.urlencoded());
-app.use(express.json());
+
 app.use(cors());
+
+app.use("/api/order/checkout/webhook", express.raw({ type: "*/*" }));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.get("/health", async (req: Request, res: Response) => {
   res.send({ message: "Health ok" });
@@ -31,6 +35,7 @@ app.get("/health", async (req: Request, res: Response) => {
 app.use("/api/my/user", userRoutes);
 app.use("/api/my/restaurant", myRestaurantRoute);
 app.use("/api/restaurant", restaurantRoute);
+app.use("/api/order", orderRoute);
 
 app.listen(7000, () => {
   console.log("Success");

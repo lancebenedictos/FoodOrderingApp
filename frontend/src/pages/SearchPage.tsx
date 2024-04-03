@@ -79,9 +79,11 @@ const SearchPage = () => {
               onChange={setSortOption}
             />
           </div>
-          {results.data.map((restaurant) => (
-            <SearchResultCard restaurant={restaurant} />
-          ))}
+          <div className="space-y-2">
+            {results.data.map((restaurant) => (
+              <SearchResultCard restaurant={restaurant} />
+            ))}
+          </div>
         </div>
         <PaginationSelector
           page={results.pagination.page}
