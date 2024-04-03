@@ -70,7 +70,7 @@ const createCheckoutSession = async (req: Request, res: Response) => {
 const stripeWebhookHandler = async (req: Request, res: Response) => {
   let event;
   try {
-    const sig = req.headers["strip-signature"];
+    const sig = req.headers["stripe-signature"];
     event = STRIPE.webhooks.constructEvent(
       req.body,
       sig as string,
