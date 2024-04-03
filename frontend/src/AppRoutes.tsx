@@ -8,6 +8,7 @@ import ManageRestaurantPage from "./pages/ManageRestaurantPage";
 import { useAuth0 } from "@auth0/auth0-react";
 import SearchPage from "./pages/SearchPage";
 import DetailPage from "./pages/DetailPage";
+import OrderStatusPage from "./pages/OrderStatusPage";
 
 const AppRoutes = () => {
   const { isLoading } = useAuth0();
@@ -42,6 +43,15 @@ const AppRoutes = () => {
           element={
             <Layout>
               <ManageRestaurantPage />
+            </Layout>
+          }
+        />
+
+        <Route
+          path="/order-status"
+          element={
+            <Layout>
+              <OrderStatusPage />
             </Layout>
           }
         />
