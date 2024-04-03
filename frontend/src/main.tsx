@@ -26,6 +26,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             position="top-right"
             richColors
             theme="light"
+            closeButton
           />
         </Auth0ProviderWithNavigate>
       </QueryClientProvider>

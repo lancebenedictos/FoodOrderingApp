@@ -6,6 +6,7 @@ import UserProfilePage from "./pages/UserProfilePage";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import ManageRestaurantPage from "./pages/ManageRestaurantPage";
 import { useAuth0 } from "@auth0/auth0-react";
+import SearchPage from "./pages/SearchPage";
 
 const AppRoutes = () => {
   const { isLoading } = useAuth0();
@@ -44,6 +45,15 @@ const AppRoutes = () => {
           }
         />
       </Route>
+
+      <Route
+        path="/search/:city"
+        element={
+          <Layout showHero={false}>
+            <SearchPage />
+          </Layout>
+        }
+      />
 
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>

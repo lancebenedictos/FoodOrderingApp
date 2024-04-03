@@ -26,12 +26,11 @@ const ImageSection = () => {
 
       <div className="flex flex-col gap-8 md:w-[50%]">
         {existingImgUrl && (
-          <AspectRatio ratio={16 / 9}>
-            <img src={existingImgUrl} rounded-md object-cover h-full w-full />
+          <AspectRatio ratio={16 / 9} className="overflow-hidden">
+            <img src={existingImgUrl} rounded-md object-cover h-full />
           </AspectRatio>
         )}
 
-        <div className=""></div>
         <FormField
           control={control}
           name="imageFile"

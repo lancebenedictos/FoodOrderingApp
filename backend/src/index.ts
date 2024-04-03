@@ -7,6 +7,7 @@ var bodyParser = require("body-parser");
 
 import myRestaurantRoute from "./routes/MyRestaurantRoute";
 import userRoutes from "./routes/UserRoutes";
+import restaurantRoute from "./routes/RestaurantRoute";
 
 mongoose
   .connect(process.env.MONGODB_CONNECTION_STRING as string)
@@ -29,6 +30,7 @@ app.get("/health", async (req: Request, res: Response) => {
 
 app.use("/api/my/user", userRoutes);
 app.use("/api/my/restaurant", myRestaurantRoute);
+app.use("/api/restaurant", restaurantRoute);
 
 app.listen(7000, () => {
   console.log("Success");
